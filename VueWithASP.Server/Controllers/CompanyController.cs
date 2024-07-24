@@ -25,7 +25,7 @@ namespace VueWithASP.Server.Controllers
         }
 
         // 查詢 API
-        [HttpGet]
+        [HttpPost("GetCompanies")]
         public async Task<ActionResult<IEnumerable<Query_Company>>> GetCompanies()
         {
             try
@@ -40,7 +40,7 @@ namespace VueWithASP.Server.Controllers
         }
 
         // 新增資料 API
-        [HttpPost]
+        [HttpPost("insertCompany")]
         public async Task<ActionResult> InsertCompany([FromBody] Insert_Company companyDto)
         {
 

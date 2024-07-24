@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VueWithASP.Server.Models;
-using ¥É¤s.Middleware;
+using ç‰å±±.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<provisionContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// æ·»åŠ  CORS æœå‹™
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowVueApp",
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:5173") // ä½ çš„ Vue æ‡‰ç”¨çš„ URL
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -27,8 +38,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// ²K¥[¥ş§½¿ù»~³B²z¤¤¤¶³nÅé
+// æ·»åŠ å…¨å±€éŒ¯èª¤è™•ç†ä¸­ä»‹è»Ÿé«”
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+// ä½¿ç”¨ CORS ä¸­ä»‹è»Ÿé«”
+app.UseCors("AllowVueApp");
 
 app.UseHttpsRedirection();
 

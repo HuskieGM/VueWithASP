@@ -1,34 +1,35 @@
 <template>
+    <meta charset="UTF-8">
     <div>
-        <h1>¤½¥q¸ê®Æ</h1>
+        <h1>å…¬å¸è³‡æ–™</h1>
+        <form @submit.prevent="addCompany">
+            <label>
+                å…¬å¸ä»£è™Ÿ:
+                <input v-model="newCompany.companyCode" required />
+            </label>
+            <label>
+                å…¬å¸åç¨±:
+                <input v-model="newCompany.companyName" required />
+            </label>
+
+            <button type="submit">æ–°å¢å…¬å¸</button>
+        </form>
         <table>
             <thead>
                 <tr>
-                    <th>¤½¥q¥N¸¹</th>
-                    <th>¤½¥q¦WºÙ</th>
-                    <!-- ¨ä¥LÄæ¦ì -->
+                    <th>å…¬å¸ä»£è™Ÿ</th>
+                    <th>å…¬å¸åç¨±</th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="company in companies" :key="company.companyId">
                     <td>{{ company.companyCode }}</td>
                     <td>{{ company.companyName }}</td>
-                    <!-- ¨ä¥LÄæ¦ì -->
                 </tr>
             </tbody>
         </table>
-        <form @submit.prevent="addCompany">
-            <label>
-                ¤½¥q¥N¸¹:
-                <input v-model="newCompany.companyCode" required />
-            </label>
-            <label>
-                ¤½¥q¦WºÙ:
-                <input v-model="newCompany.companyName" required />
-            </label>
-            <!-- ¨ä¥LÄæ¦ì -->
-            <button type="submit">·s¼W¤½¥q</button>
-        </form>
+
     </div>
 </template>
 
@@ -72,8 +73,8 @@
             async addCompany() {
                 try {
                     await insertCompany(this.newCompany);
-                    this.loadCompanies(); // ­«·s¥[¸ü¤½¥q¸ê®Æ
-                    this.resetForm(); // ­«¸mªí³æ
+                    this.loadCompanies(); // é‡æ–°åŠ è¼‰å…¬å¸è³‡æ–™
+                    this.resetForm(); // é‡ç½®è¡¨å–®
                 } catch (error) {
                     console.error('Error adding company:', error);
                 }
@@ -101,7 +102,7 @@
 </script>
 
 <style scoped>
-    /* ²K¥[¤@¨Ç¼Ë¦¡ */
+
     table {
         width: 100%;
         border-collapse: collapse;
